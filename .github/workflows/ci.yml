@@ -1,0 +1,40 @@
+name: CI Pipeline - Flask + Docker
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Checkout 專案程式碼
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # 2. 設定 Python 環境
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.9"
+
+    # 3. 安裝依賴
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    # 4. 執行測試（這裡先跑簡單的 Python 版本檢查）
+    - name: Run tests
+      run: |
+        python --version
+        python app.py & sleep 5
+        curl http://127.0.0.1:5000 || exit 1
+
+    # 5. 建立 Docker image
+    - name: Build Docker image
+      run: |
+        docker build -t my-flask-app .
+
