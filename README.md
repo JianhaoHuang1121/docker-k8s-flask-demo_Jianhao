@@ -1,7 +1,7 @@
 # 🚀 Docker + Kubernetes Flask Demo
 
 這是一個最小可行版本（MVP）的專案，展示如何將 **Flask API** 使用 **Docker 容器化**，並部署到 **Kubernetes (Minikube)**，同時驗證 **Rolling Update** 與 **HPA 自動擴展**。  
-此專案作為 **DevOps 入門作品集**，展現從開發 → 容器化 → 部署 → 叢集管理的完整流程。
+此專案作為 **DevOps 入門作品集**，展現從開發 → 容器化 → 部署 → 叢集管理的完整流程，並延伸到 **系統監控與可觀察性**（Prometheus + Grafana）。
 
 ---
 
@@ -12,6 +12,8 @@ docker-k8s-flask-demo/
 │── requirements.txt      # 套件需求
 │── Dockerfile            # Docker 映像檔設定
 │── flask-deployment.yaml # K8s Deployment + Service
+│── prometheus.yml        # Prometheus 設定
+│── docker-compose.yml    # 一次啟動 Flask + Prometheus + Grafana
 │── README.md             # 文件說明
 ```
 
@@ -103,16 +105,39 @@ kubectl get hpa
 
 ---
 
-## 📊 成果展示
-✅ 使用 Docker 將 Flask API 容器化  
-✅ 部署於 Kubernetes (Minikube)  
-✅ 測試 Rolling Update 與 HPA 自動擴展  
-✅ 適合作為 DevOps / Cloud-Native 入門展示專案  
+## 📈 加入監控 (Prometheus + Grafana)
 
----
+除了基本的 Docker + Kubernetes 部署，本專案還整合了 **Prometheus** 與 **Grafana**，用來監控 Flask API 的請求數量、速率與延遲。
 
+### 🔧 新增檔案
+```
+prometheus.yml        # Prometheus 設定
+docker-compose.yml    # 一次啟動 Flask + Prometheus + Grafana
+```
 
-「使用 Docker 將 Flask API 容器化，部署於 Minikube，實作 Rolling Update 與 HPA，展示雲原生服務彈性擴展。」
+### 🚀 使用步驟
+
+#### 1. 啟動整個監控環境
+```bash
+docker-compose up -d
+```
+
+#### 2. 開啟服務
+- Flask: [http://localhost:5000/hello](http://localhost:5000/hello)  
+- Prometheus: [http://localhost:9090](http://localhost:9090)  
+- Grafana: [http://localhost:3000](http://localhost:3000) （預設帳密：`admin / admin`）
+
+#### 3. 建立 Grafana Dashboard
+- 在 Grafana 新增 **Prometheus Data Source**（URL: `http://host.docker.internal:9090`）  
+- 建立三個 Panel：
+  - `http_requests_total` → 總請求數  
+  - `rate(http_requests_total[1m])` → 每秒請求速率  
+  - `rate(http_request_duration_seconds_sum[1m]) / rate(http_request_duration_seconds_count[1m])` → 平均延遲  
+
+### 📊 成果展示
+- Prometheus 成功抓取 Flask API 的 `/metrics`  
+- Grafana 可視化 API 請求數量、速率與延遲  
+- 展現完整 **DevOps 監控 + 可觀察性** 能力  
 
 ---
 
@@ -121,3 +146,5 @@ kubectl get hpa
 - [Docker](https://docs.docker.com/)  
 - [Kubernetes](https://kubernetes.io/)  
 - [Minikube](https://minikube.sigs.k8s.io/docs/)  
+- [Prometheus](https://prometheus.io/)  
+- [Grafana](https://grafana.com/)  
