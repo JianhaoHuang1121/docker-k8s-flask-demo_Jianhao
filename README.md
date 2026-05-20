@@ -1,11 +1,11 @@
-# 🚀 Docker + Kubernetes Flask Demo
+#  Docker + Kubernetes Flask Demo
 
 這是一個最小可行版本（MVP）的專案，展示如何將 Flask API 使用 Docker 容器化，並部署到 Kubernetes (Minikube)，同時驗證 Rolling Update 與 HPA 自動擴展。  
 此專案作為 DevOps 入門作品集，展現從開發 → 容器化 → 部署 → 叢集管理的完整流程，並延伸到 系統監控與可觀察性（Prometheus + Grafana）。
 
 ---
 
-## 📂 專案架構
+## 專案架構
 ```
 docker-k8s-flask-demo/
 │── app.py                # Flask API
@@ -19,7 +19,7 @@ docker-k8s-flask-demo/
 
 ---
 
-## 🛠️ 環境需求
+## 環境需求
 - Python 3.9+
 - Docker
 - Minikube
@@ -28,7 +28,7 @@ docker-k8s-flask-demo/
 
 ---
 
-## 📝 使用步驟
+## 使用步驟
 
 ### 1. 啟動 Flask API (本地測試)
 ```bash
@@ -105,17 +105,17 @@ kubectl get hpa
 
 ---
 
-## 📈 加入監控 (Prometheus + Grafana)
+## 加入監控 (Prometheus + Grafana)
 
 除了基本的 Docker + Kubernetes 部署，本專案還整合了 **Prometheus** 與 **Grafana**，用來監控 Flask API 的請求數量、速率與延遲。
 
-### 🔧 新增檔案
+### 新增檔案
 ```
 prometheus.yml        # Prometheus 設定
 docker-compose.yml    # 一次啟動 Flask + Prometheus + Grafana
 ```
 
-### 🚀 使用步驟
+### 使用步驟
 
 #### 1. 啟動整個監控環境
 ```bash
@@ -134,7 +134,7 @@ docker-compose up -d
   - `rate(http_requests_total[1m])` → 每秒請求速率  
   - `rate(http_request_duration_seconds_sum[1m]) / rate(http_request_duration_seconds_count[1m])` → 平均延遲  
 
-### 📊 成果展示
+###  成果展示
 - Prometheus 成功抓取 Flask API 的 `/metrics`  
 - Grafana 可視化 API 請求數量、速率與延遲  
 - 展現完整 **DevOps 監控 + 可觀察性** 能力  
