@@ -1,7 +1,7 @@
 # 🚀 Docker + Kubernetes Flask Demo
 
-這是一個最小可行版本（MVP）的專案，展示如何將 **Flask API** 使用 **Docker 容器化**，並部署到 **Kubernetes (Minikube)**，同時驗證 **Rolling Update** 與 **HPA 自動擴展**。  
-此專案作為 **DevOps 入門作品集**，展現從開發 → 容器化 → 部署 → 叢集管理的完整流程，並延伸到 **系統監控與可觀察性**（Prometheus + Grafana）。
+這是一個最小可行版本（MVP）的專案，展示如何將 Flask API 使用 Docker 容器化，並部署到 Kubernetes (Minikube)，同時驗證 Rolling Update 與 HPA 自動擴展。  
+此專案作為 DevOps 入門作品集，展現從開發 → 容器化 → 部署 → 叢集管理的完整流程，並延伸到 系統監控與可觀察性（Prometheus + Grafana）。
 
 ---
 
